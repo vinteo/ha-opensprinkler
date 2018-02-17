@@ -44,6 +44,7 @@ utc_tz = pytz.timezone('UTC')
 SENSOR_TYPES = {
     'opensprinkler_rain': ['os_rain', None, 'mdi:weather-rainy', 'Rain Delay'],
     'opensprinkler_lastrun': ['os_lastrun', None, 'mdi:history', 'Last Run'],
+    'opensprinkler_waterlevel': ['os_waterlevel', '%', 'mdi:water', 'Water Level'],
     'opensprinkler_pump': ['os_pump', None, 'mdi:water-pump'],
     'opensprinkler_station': ['os_station', None, 'mdi:leaf'],
     'opensprinkler_schedule': ['os_schedule', None, 'mdi:calendar-clock']
@@ -150,6 +151,8 @@ class OpenSprinklerSensor(Entity):
               self._state = 'Active'
             else:
               self._state = 'None'
+        elif(self._sensor_type == 'opensprinkler_waterlevel'):
+            self._state = self._osData.data['data']['water_level']
         elif(self._sensor_type == 'opensprinkler_schedule'):
             if(self._osData.data['data']['programs'][self._key]['Enabled']=='1'):
                 self._state = "Enabled"

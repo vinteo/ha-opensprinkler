@@ -305,6 +305,7 @@ def parse_api_data(response):
 
     my_dict['rain_delay'] = rain_delay
     my_dict['rain_delay_time'] = rain_delay_time
+    my_dict['water_level'] = options['wl']
     my_dict['lastrun'] = processLastRun(settings['lrun'], stations['snames'])
     my_dict['snames'] = stations['snames']
     i = 0

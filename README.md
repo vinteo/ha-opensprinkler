@@ -60,6 +60,7 @@ select the sensors to monitor
     - opensprinkler_schedule
     - opensprinkler_lastrun
     - opensprinkler_rain
+    - opensprinkler_waterlevel
 ```
 
 in your input_text.yaml
@@ -81,6 +82,7 @@ Add them all, the component will hide any disabled stations / programs.
       entities:
         - sensor.os_lastrun
         - sensor.os_rain
+        - sensor.os_waterlevel
         - sensor.os_schedule_1
         - sensor.os_schedule_2
         - sensor.os_schedule_3
