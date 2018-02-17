@@ -40,24 +40,17 @@ SCAN_INTERVAL = timedelta(seconds=5)
 
 utc_tz = pytz.timezone('UTC')
 
-# sensor_type [ description, unit, icon ]
+# sensor_type [ description, unit, icon, name ]
 SENSOR_TYPES = {
-    'opensprinkler_rain': ['os_rain', None, 'mdi:weather-rainy'],
-    'opensprinkler_lastrun': ['os_lastrun', None, 'mdi:history'],
-    'opensprinkler_pump': ['os_pump', None, 'mdi:water-pump'],
-    'opensprinkler_station': ['os_station', None, 'mdi:leaf'],
-    'opensprinkler_schedule': ['os_schedule', None, 'mdi:calendar-clock']
-}
-SENSOR_TYPES_DEFAULT = {
-    'opensprinkler_rain': ['os_rain', None, 'mdi:weather-rainy'],
-    'opensprinkler_lastrun': ['os_lastrun', None, 'mdi:history'],
+    'opensprinkler_rain': ['os_rain', None, 'mdi:weather-rainy', 'Rain Delay'],
+    'opensprinkler_lastrun': ['os_lastrun', None, 'mdi:history', 'Last Run'],
     'opensprinkler_pump': ['os_pump', None, 'mdi:water-pump'],
     'opensprinkler_station': ['os_station', None, 'mdi:leaf'],
     'opensprinkler_schedule': ['os_schedule', None, 'mdi:calendar-clock']
 }
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Optional(CONF_MONITORED_CONDITIONS, default=list(SENSOR_TYPES_DEFAULT)):
+    vol.Optional(CONF_MONITORED_CONDITIONS, default=list(SENSOR_TYPES)):
         vol.All(cv.ensure_list, [vol.In(SENSOR_TYPES)]),
 })
 
@@ -97,7 +90,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
                 count += 1
 
         else:
-            sensors.append(OpenSprinklerSensor(osData, '', '', sensor_type))
+            sensors.append(OpenSprinklerSensor(osData, SENSOR_TYPES[sensor_type][3], '', sensor_type))
     add_devices(sensors, True)
 
 
